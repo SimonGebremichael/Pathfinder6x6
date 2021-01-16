@@ -74,6 +74,7 @@ namespace sg_Pathfinder
             this.shortBtn = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
+            this.diagonalsBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pic1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pic2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pic3)).BeginInit();
@@ -403,7 +404,7 @@ namespace sg_Pathfinder
             // message
             // 
             this.message.AutoSize = true;
-            this.message.Location = new System.Drawing.Point(236, 22);
+            this.message.Location = new System.Drawing.Point(182, 22);
             this.message.Name = "message";
             this.message.Size = new System.Drawing.Size(65, 17);
             this.message.TabIndex = 36;
@@ -422,7 +423,7 @@ namespace sg_Pathfinder
             // 
             // btnReset
             // 
-            this.btnReset.Location = new System.Drawing.Point(15, 439);
+            this.btnReset.Location = new System.Drawing.Point(12, 535);
             this.btnReset.Name = "btnReset";
             this.btnReset.Size = new System.Drawing.Size(93, 81);
             this.btnReset.TabIndex = 38;
@@ -466,7 +467,7 @@ namespace sg_Pathfinder
             this.shortBtn.Name = "shortBtn";
             this.shortBtn.Size = new System.Drawing.Size(93, 81);
             this.shortBtn.TabIndex = 42;
-            this.shortBtn.Text = "find shortest";
+            this.shortBtn.Text = "best of 10 routes";
             this.shortBtn.UseVisualStyleBackColor = false;
             this.shortBtn.Click += new System.EventHandler(this.shortBtn_Click);
             // 
@@ -481,19 +482,32 @@ namespace sg_Pathfinder
             // 
             // button1
             // 
+            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
             this.button1.Location = new System.Drawing.Point(12, 247);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(93, 81);
             this.button1.TabIndex = 44;
             this.button1.Text = "smart search";
-            this.button1.UseVisualStyleBackColor = true;
+            this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // diagonalsBtn
+            // 
+            this.diagonalsBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+            this.diagonalsBtn.Location = new System.Drawing.Point(12, 439);
+            this.diagonalsBtn.Name = "diagonalsBtn";
+            this.diagonalsBtn.Size = new System.Drawing.Size(93, 81);
+            this.diagonalsBtn.TabIndex = 45;
+            this.diagonalsBtn.Text = "use diagonals";
+            this.diagonalsBtn.UseVisualStyleBackColor = false;
+            this.diagonalsBtn.Click += new System.EventHandler(this.diagonalsBtn_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1191, 819);
+            this.Controls.Add(this.diagonalsBtn);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.shortBtn);
@@ -630,6 +644,7 @@ namespace sg_Pathfinder
         private System.Windows.Forms.Button shortBtn;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button diagonalsBtn;
     }
 }
 

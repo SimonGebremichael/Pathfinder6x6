@@ -19,7 +19,7 @@ namespace sg_Pathfinder
         int[] x, y;
         int endX, endY;
         bool endPass = false;
-
+        bool switchToStandard = false;
         bool[,] avail = new bool[6, 6];
         Label mess, mess2, routesMess;
         Button shortestBtn;
@@ -125,71 +125,120 @@ namespace sg_Pathfinder
             randomize();
         }
 
-        public void smartSearch()
+        public void diagonalSearch()
         {
             int[] result1 = null, result2 = null;
             int tempX = x[x.Length - 1];
             int tempY = y[y.Length - 1];
 
-            if (tempX < endX && !avail[tempX + 1, tempY])
+            bool pass = false;
+            while (pass == false)
             {
-                tempX++;
-                result1 = x.Append(tempX);
-                result2 = y.Append(tempY);
-                avail[tempX, tempY] = true;
-            }
-            else if (tempX > endX && !avail[tempX - 1, tempY])
-            {
-                tempX--;
-                result1 = x.Append(tempX--);
-                result2 = y.Append(tempY);
-                avail[tempX, tempY] = true;
-
-            }
-            else
-            {
-                if (tempY < endY && !avail[tempY + 1, tempX])
+                if (tempX < endX && tempY < endY && !avail[tempX + 1, tempY + 1])
                 {
+                    tempX++;
                     tempY++;
-                    result1 = x.Append(tempX);
-                    result2 = y.Append(tempY++);
-                    avail[tempX, tempY] = true;
-
+                    pass = true;
                 }
-                else if (y[y.Length - 1] > endY && !avail[tempY - 1, tempX])
+                else if (tempX > endX && tempY > endY && !avail[tempX - 1, tempY - 1])
                 {
+                    tempX--;
                     tempY--;
-                    result1 = x.Append(tempX);
-                    result2 = y.Append(tempY--);
-                    avail[tempX, tempY] = true;
+                    pass = true;
+                }
+                else if(tempX > endX && tempY < endY && !avail[tempX - 1, tempY + 1])
+                {
+                    tempX--;
+                    tempY++;
+                    pass = true;
+                }
+                else if (tempX < endX && tempY > endY && !avail[tempX + 1, tempY - 1])
+                {
+                    tempX++;
+                    tempY--;
+                    pass = true;
+                }
+                else
+                {
+                    switchToStandard = true;
+                    pass = true;
                 }
             }
-            mess.Text = "X: " + x.Length.ToString() + ", Y: " + y.Length.ToString();
-            mess.Text += " R: " + result1.Length.ToString() + " RR: " + result2.Length.ToString();
+            result1 = x.Append(tempX);
+            result2 = y.Append(tempY);
+            avail[tempX, tempY] = true;
+
+            mess.Text = "X: " + string.Join(" | ", x);
+            mess.Text += "\nY: " + string.Join(" | ", y);
 
             x = result1;
             y = result2;
 
             picArr[tempX, tempY].BackColor = Color.Red;
         }
-        public int[] randPos()
+        public void smartSearch()
+        {
+            int[] result1 = null, result2 = null;
+            int tempX = x[x.Length - 1];
+            int tempY = y[y.Length - 1];
+
+            bool pass = false;
+            while (pass == false)
+            {
+                if (tempX < endX && !avail[tempX + 1, tempY])
+                {
+                    tempX++;
+                    pass = true;
+                }
+                else if (tempX > endX && !avail[tempX - 1, tempY])
+                {
+                    tempX--;
+                    pass = true;
+                }
+                else
+                {
+                    if (tempY < endY && !avail[tempY + 1, tempX])
+                    {
+                        tempY++;
+                        pass = true;
+                    }
+                    else if (y[y.Length - 1] > endY && !avail[tempY - 1, tempX])
+                    {
+                        tempY--;
+                        pass = true;
+                    }
+                }
+            }
+            result1 = x.Append(tempX);
+            result2 = y.Append(tempY);
+            avail[tempX, tempY] = true;
+
+
+            mess.Text = "X: " + string.Join(" | ", x);
+            mess.Text += "\nY: " + string.Join(" | ", y);
+
+            x = result1;
+            y = result2;
+
+            picArr[tempX, tempY].BackColor = Color.Red;
+        }
+        public void randomSearch()
         {
             Random r = new Random();
             int posx = 0, posy = 0;
             bool pass = false;
             int[] result1 = null, result2 = null;
-
+            int tempX = x[x.Length - 1], tempY = y[y.Length - 1];
 
             while (pass == false)
             {
                 posx = r.Next(0, 6);
                 posy = r.Next(0, 6);
 
-                
                 if (!avail[posx, posy])
                 {
                     //different in x alis
-                    if (posx == x[x.Length - 1] + 1 && posy == y[y.Length - 1] || posx == x[x.Length - 1] - 1 && posy == y[y.Length - 1])
+                    if (posx == tempX + 1 && posy == tempY || posx == tempX - 1 && posy == tempY)
                     {
                         result1 = x.Append(posx);
                         result2 = y.Append(posy);
@@ -197,7 +246,7 @@ namespace sg_Pathfinder
                         pass = true;
                     }
                     //different in y alis
-                    else if (posx == x[x.Length - 1] && posy == y[y.Length - 1] + 1 || posx == x[x.Length - 1] && posy == y[y.Length - 1] - 1)
+                    else if (posx == tempX && posy == tempY + 1 || posx == tempX && posy == tempY - 1)
                     {
                         result1 = x.Append(posx);
                         result2 = y.Append(posy);
@@ -206,19 +255,20 @@ namespace sg_Pathfinder
                     }
                 }
             }
-            mess.Text = "X: " + x.Length.ToString() + ", Y: " + y.Length.ToString();
-            mess.Text += " R: " + result1.Length.ToString() + " RR: " + result2.Length.ToString();
+
+            mess.Text = "X: " + string.Join(" | ", x);
+            mess.Text += "\nY: " + string.Join(" | ", y);
 
             x = result1;
             y = result2;
 
-            int[] draw = { posx, posy };
-            return draw;
+            picArr[posx, posy].BackColor = Color.Red;
         }
 
         public void startBTN_Click(object sender, EventArgs e)
         {
-            start(true, false);
+            resetEverything();
+            start(true, false, false);
         }
 
         public bool lostPath()
@@ -283,10 +333,27 @@ namespace sg_Pathfinder
         public void randomize()
         {
             Random r = new Random();
-            int newX = r.Next(0, 6);
-            int newY = r.Next(0, 6);
-            int endXX = r.Next(0, 6);
-            int endYY = r.Next(0, 6);
+            int newX = 0, newY = 0, endXX = 0, endYY = 0;
+
+            bool match = false;
+            while (match == false)
+            {
+                newX = r.Next(0, 6);
+                newY = r.Next(0, 6);
+                endXX = r.Next(0, 6);
+                endYY = r.Next(0, 6);
+                if (newX != endXX && newY != endYY)
+                {
+                    if (newX != endXX + 1 && newX != endXX - 1)
+                    {
+                        if (newY != endYY + 1 && newY != endYY - 1)
+                        {
+                            match = true;
+                        }
+                    }
+                }
+            }
+          
 
             int[] tempX = { newX },
                   tempY = { newY };
@@ -305,35 +372,38 @@ namespace sg_Pathfinder
             reset();
         }
 
-        async void start(bool wait, bool smartPath)
+        async void start(bool wait, bool smartPath, bool diagonal)
         {
             reset();
             while (endPass == false)
             {
-                if (wait) { await Task.Delay(200); }
-                else { await Task.Delay(0); }
-
-                if (!smartPath)
-                {
-                    int[] res = randPos();
-                    picArr[res[0], res[1]].BackColor = Color.Red;
-                }
-                else
-                {
-                    smartSearch();
-                }
-
                 if (check())
                 {
                     storePaths();
                     endPass = true;
                 }
+                else
+                {
+                    if (wait) { await Task.Delay(200); }
+                    else { await Task.Delay(0); }
+
+                    if (smartPath || switchToStandard)
+                    {
+                        smartSearch();
+                    } else if (diagonal)
+                    {
+                        diagonalSearch();
+                    }
+                    else
+                    {
+                        randomSearch();
+                    }
+                }
 
                 if (lostPath())
                 {
                     mess.Text = "Lost Path";
-                    endPass = true;
-                    start(true, false);
+                    start(true, false, false);
                 }
             }
         }
@@ -343,7 +413,7 @@ namespace sg_Pathfinder
             resetEverything();
             for (int i = 0; i < 10; i++)
             {
-                start(false, false);
+                start(false, false, false);
                 await Task.Delay(200);
             }
             mess.Text = shortestPath().ToString() + " blocks";
@@ -369,7 +439,14 @@ namespace sg_Pathfinder
 
         private void button1_Click(object sender, EventArgs e)
         {
-            start(true, true);
+            resetEverything();
+            start(true, true, false);
+        }
+
+        private void diagonalsBtn_Click(object sender, EventArgs e)
+        {
+            resetEverything();
+            start(true, false, true);
         }
 
         public void drawOptimal(string xx, string yy) {
@@ -422,6 +499,7 @@ namespace sg_Pathfinder
             avail[x[0], y[0]] = true;
             avail[endX, endY] = true;
             shortBtn.Text = "find shortest";
+            switchToStandard = false;
             endPass = false;
         }
 
