@@ -213,7 +213,6 @@ namespace sg_Pathfinder
             result2 = y.Append(tempY);
             avail[tempX, tempY] = true;
 
-
             mess.Text = "X: " + string.Join(" | ", x);
             mess.Text += "\nY: " + string.Join(" | ", y);
 

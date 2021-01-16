@@ -476,9 +476,9 @@ namespace sg_Pathfinder
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(12, 22);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(127, 17);
+            this.label1.Size = new System.Drawing.Size(146, 17);
             this.label1.TabIndex = 43;
-            this.label1.Text = "simon\'s path finder";
+            this.label1.Text = "simon\'s Pathfinder6x6";
             // 
             // button1
             // 
