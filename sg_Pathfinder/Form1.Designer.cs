@@ -73,6 +73,7 @@ namespace sg_Pathfinder
             this.randomBtn = new System.Windows.Forms.Button();
             this.shortBtn = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pic1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pic2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pic3)).BeginInit();
@@ -421,7 +422,7 @@ namespace sg_Pathfinder
             // 
             // btnReset
             // 
-            this.btnReset.Location = new System.Drawing.Point(12, 342);
+            this.btnReset.Location = new System.Drawing.Point(15, 439);
             this.btnReset.Name = "btnReset";
             this.btnReset.Size = new System.Drawing.Size(93, 81);
             this.btnReset.TabIndex = 38;
@@ -450,7 +451,7 @@ namespace sg_Pathfinder
             // randomBtn
             // 
             this.randomBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-            this.randomBtn.Location = new System.Drawing.Point(12, 246);
+            this.randomBtn.Location = new System.Drawing.Point(12, 343);
             this.randomBtn.Name = "randomBtn";
             this.randomBtn.Size = new System.Drawing.Size(93, 81);
             this.randomBtn.TabIndex = 41;
@@ -478,11 +479,22 @@ namespace sg_Pathfinder
             this.label1.TabIndex = 43;
             this.label1.Text = "simon\'s path finder";
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(12, 247);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(93, 81);
+            this.button1.TabIndex = 44;
+            this.button1.Text = "smart search";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1191, 819);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.shortBtn);
             this.Controls.Add(this.randomBtn);
@@ -617,6 +629,7 @@ namespace sg_Pathfinder
         private System.Windows.Forms.Button randomBtn;
         private System.Windows.Forms.Button shortBtn;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button button1;
     }
 }
 
